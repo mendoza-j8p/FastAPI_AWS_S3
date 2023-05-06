@@ -4,7 +4,7 @@ Este proyecto utiliza FastAPI y Boto3 para crear un bucket de AWS S3 en una regi
 
 ## Configuración
 
-1. Descargue el proyecto en su computadora
+1. Descargue el proyecto en su ordenador.
 2. Configure sus credenciales de AWS en su entorno local para que Boto3 pueda acceder a su cuenta. Para hacerlo, siga las instrucciones en la **documentación oficial de AWS.**
 3. Instale los paquetes necesarios utilizando el comando **pip install -r requirements.txt**
 
@@ -13,7 +13,7 @@ Este proyecto utiliza FastAPI y Boto3 para crear un bucket de AWS S3 en una regi
 - Ejecute el archivo **main.py** con el comando **python main.py**
 - Envíe una solicitud POST al endpoint **http://localhost:8000/create_s3_bucket** con un body vacío.
 
-## Estos los pasos para utilizar la API que creamos anteriormente para crear una instancia de EC2 utilizando Postman
+## Estos los pasos para utilizar la API que creamos anteriormente para crear un bucket de AWS utilizando Postman
 
 - Abre la aplicación de Postman.
 
