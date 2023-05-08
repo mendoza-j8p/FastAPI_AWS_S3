@@ -1,6 +1,17 @@
 # Proyecto FastAPI con AWS S3
 
-Este proyecto utiliza FastAPI y Boto3 para crear un bucket de AWS S3 en una región específica. El nombre del bucket se genera aleatoriamente y se comprueba si ya existe antes de crearlo.
+Este proyecto utiliza FastAPI y Boto3 para crear un bucket y borrar todos los buckets de AWS S3 en una región específica. El nombre del bucket se genera aleatoriamente y se comprueba si ya existe antes de crearlo.
+
+## configuración inicial de la aplicación FastAPI
+
+Si dejamos los campos en blanco, FastAPI los generara automaticamente.
+
+- **title**: Un nombre descriptivo para la aplicación.
+- **description**: Una descripción breve de la funcionalidad de la API.
+- **version**: La versión actual de la API.
+- **openapi_url**: La ruta del archivo OpenAPI que describe la estructura y las funcionalidades de la API.
+- **docs_url**: La ruta de la documentación que permite interactuar con la API mediante un navegador web.
+- **redoc_url**: La ruta de la documentación pero utilizando el estilo de Redoc, que proporciona una experiencia de usuario más atractiva.
 
 ## Configuración
 
@@ -11,7 +22,20 @@ Este proyecto utiliza FastAPI y Boto3 para crear un bucket de AWS S3 en una regi
 ## Ejecución
 
 - Ejecute el archivo **main.py** con el comando **python main.py**
-- Envíe una solicitud POST al endpoint **http://localhost:8000/create_s3_bucket** con un body vacío.
+- Desde la ruta de la docs. **http://0.0.0.0:8000/api/v1/docs**, utilice los endpoints para crear o borrar los buckets.
+
+Desde un cliente externo como Postman:
+
+- Para crear: envíe una solicitud POST al endpoint **http://localhost:8000/create_s3_bucket** con un body vacío.
+- Para borrar: envíe una solicitud POST al endpoint **http://localhost:8000/delete_all_s3_buckets** con un body vacío.
+
+Adicionalmente, puede añadir en la pestaña de test, los test que considere, como por ejemplo:
+
+    pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+Y usar Postman Runner para correr estos test de forma automatica.
 
 ## Estos los pasos para utilizar la API que creamos anteriormente para crear un bucket de AWS utilizando Postman
 
@@ -23,7 +47,7 @@ Este proyecto utiliza FastAPI y Boto3 para crear un bucket de AWS S3 en una regi
 
 - En la pestaña "Body", selecciona "raw" y establece el tipo de cuerpo en "JSON".
 
-- En la sección de cuerpo, dejalo vací  o.
+- En la sección de cuerpo, dejalo vacío.
 
 - En la pestaña "Headers", agrega un encabezado con la clave "Content-Type" y el valor "application/json".
 

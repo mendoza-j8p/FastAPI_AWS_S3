@@ -9,7 +9,15 @@ from botocore.exceptions import ClientError
 session = get_session()
 s3_client = session.client('s3')
 
-app = FastAPI()
+app = FastAPI(
+    title="API de gestión de buckets de Amazon S3",
+    description="Esta API permite crear y eliminar buckets en Amazon S3 utilizando Boto3 y FastAPI",
+    version="1.0.0",
+    openapi_url="/api/v1/openapi.json",
+    docs_url="/api/v1/docs",
+    redoc_url="/api/v1/redoc"
+)
+
 
 @app.post("/create_s3_bucket")
 def create_s3_bucket():
@@ -24,13 +32,22 @@ def create_s3_bucket():
             'LocationConstraint': region_name # Especifica la región en la que se debe crear el bucket
         }) # Si no existe, crea el bucket en la región especificada
         return JSONResponse(content={"message": f"S3 bucket {bucket_name} created successfully in {region_name}"})
+    
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
-
-
+@app.delete("/delete_all_s3_buckets")
+def delete_all_s3_buckets():
+    response = s3_client.list_buckets()
+    buckets = [bucket['Name'] for bucket in response['Buckets']]
+    for bucket in buckets:
+        try:
+            s3 = boto3.resource('s3')
+            bucket_to_delete = s3.Bucket(bucket)
+            bucket_to_delete.objects.all().delete()
+            bucket_to_delete.delete()
+            print(f"Bucket {bucket} eliminado correctamente")
+        except Exception as e:
+            print(f"Error al eliminar el bucket {bucket}: {e}")
+    return JSONResponse(content={"message": "Todos los buckets de S3 han sido eliminados correctamente"})
 
 
 if __name__ == "__main__":
